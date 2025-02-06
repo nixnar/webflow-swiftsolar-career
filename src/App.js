@@ -36,7 +36,7 @@ const App = () => {
 
   //loading. TODO: ask if need ghost UI
   if (isLoading || !data.jobs) {
-    return <div>Loading...</div>;
+    return <div>Loading.</div>;
   }
 
   //structure
