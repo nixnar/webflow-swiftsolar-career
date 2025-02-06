@@ -1,86 +1,109 @@
 import React from "react";
 import "./style.css";
 import SingleEntry from "./SingleEntry";
+
 const App = () => {
   const [data, setData] = React.useState([]);
+  const [departments, setDepartments] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "https://boards-api.greenhouse.io/v1/boards/swiftsolar/jobs?content=true"
-      );
-      const data = await response.json();
-      setData(data);
+    const fetchAllData = async () => {
+      try {
+        // parallel fetch jobs/departments
+        const [jobsResponse, deptsResponse] = await Promise.all([
+          fetch(
+            "https://boards-api.greenhouse.io/v1/boards/swiftsolar/jobs?content=true"
+          ),
+          fetch(
+            "https://boards-api.greenhouse.io/v1/boards/swiftsolar/departments"
+          ),
+        ]);
+
+        const jobsData = await jobsResponse.json();
+        const deptsData = await deptsResponse.json();
+
+        setData(jobsData);
+        setDepartments(deptsData.departments);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
-    fetchData();
+    fetchAllData();
   }, []);
 
-  // First, let's group jobs by department and create a structured array
-  const departments = [];
-
-  // Add loading and error handling
-  if (!data.jobs) {
+  //loading. TODO: ask if need ghost UI
+  if (isLoading || !data.jobs) {
     return <div>Loading...</div>;
   }
 
-  // Track unique department parent/child relationships
+  //structure
+  const structuredDepartments = [];
   const deptMap = new Map();
 
-  // Process each job
+  //create map of all dep by ids
+  departments.forEach((dept) => {
+    deptMap.set(dept.id, {
+      name: dept.name,
+      jobs: [],
+      id: dept.id,
+      parent_id: dept.parent_id,
+    });
+  });
+
+  //map jobs
   data.jobs.forEach((job) => {
     const dept = job.departments[0];
-
-    // Get or create parent department
-    let parentDept = deptMap.get(dept.parent_id);
-    if (!parentDept && dept.parent_id) {
-      parentDept = {
-        name:
-          dept.parent_id === 4003267008
-            ? "Engineering"
-            : dept.parent_id === 4003276008
-            ? "R&D"
-            : "General",
-        jobs: [],
-      };
-      departments.push(parentDept);
-      deptMap.set(dept.parent_id, parentDept);
-    }
-
-    // Get or create child department
-    let childDept = deptMap.get(dept.id);
-    if (!childDept) {
-      childDept = {
-        name: dept.name,
-        jobs: [],
-      };
-      // Add to parent if exists, otherwise add to root
-      if (parentDept) {
-        if (!parentDept.children) parentDept.children = [];
-        parentDept.children.push(childDept);
-      } else {
-        departments.push(childDept);
-      }
-      deptMap.set(dept.id, childDept);
-    }
-
-    // Add job to appropriate department
     const jobData = {
       title: job.title,
       location: job.offices[0].name,
       url: job.absolute_url,
     };
 
-    if (parentDept) {
-      childDept.jobs.push(jobData);
-    } else {
-      childDept.jobs.push(jobData);
+    const currentDept = deptMap.get(dept.id);
+    const parentDept = dept.parent_id ? deptMap.get(dept.parent_id) : null;
+
+    if (currentDept) {
+      if (!currentDept.jobs) currentDept.jobs = [];
+      currentDept.jobs.push(jobData);
+    }
+  });
+  //debug
+  //console.log("Department Map as object:", Object.fromEntries(deptMap));
+
+  // first setup children arrays
+  deptMap.forEach((dept) => {
+    if (dept.parent_id) {
+      const parentDept = deptMap.get(dept.parent_id);
+      if (parentDept) {
+        if (!parentDept.children) parentDept.children = [];
+        // add child if only has jobs
+        if (dept.jobs?.length > 0) {
+          parentDept.children.push(dept);
+        }
+      }
+    }
+  });
+
+  // second add root depts
+  deptMap.forEach((dept) => {
+    if (!dept.parent_id) {
+      //add if has jobs or children
+      if (
+        dept.jobs?.length > 0 ||
+        (dept.children && dept.children.length > 0)
+      ) {
+        structuredDepartments.push(dept);
+      }
     }
   });
 
   return (
     <div className="tailwind newborder">
       <div className="max-w-[1440px] w-full grow">
-        {departments.map((department) => (
+        {structuredDepartments.map((department) => (
           <div
             key={department.name}
             className="pb-8 pt-4 w-full max-[766px]:pb-[1rem]"
@@ -90,19 +113,21 @@ const App = () => {
             </div>
 
             {department.children
-              ? // Parent department with children
+              ? // children jobs
                 department.children.map((childDept) => (
                   <div key={childDept.name} className="w-full">
                     <div className="pt-6">
                       <h3 className="text-[#474747]">{childDept.name}</h3>
                     </div>
                     {childDept.jobs.map((job) => (
-                      <SingleEntry job={job} />
+                      <SingleEntry key={job.url} job={job} />
                     ))}
                   </div>
                 ))
-              : // Department without children
-                department.jobs.map((job) => <SingleEntry job={job} />)}
+              : // root jobs
+                department.jobs.map((job) => (
+                  <SingleEntry key={job.url} job={job} />
+                ))}
           </div>
         ))}
       </div>

@@ -1,0 +1,170 @@
+{
+  "0": {
+    "name": "No Department",
+    "jobs": [],
+    "id": 0,
+    "parent_id": null
+  },
+  "4003267008": {
+    "name": "Engineering",
+    "jobs": [],
+    "id": 4003267008,
+    "parent_id": null,
+    "children": [
+      {
+        "name": "Equipment Engineering",
+        "jobs": [
+          {
+            "title": "Equipment Maintenance Engineer",
+            "location": "San Carlos, CA",
+            "url": "https://boards.greenhouse.io/swiftsolar/jobs/4508331008"
+          },
+          {
+            "title": "Senior Equipment Maintenance Technician",
+            "location": "San Carlos, CA",
+            "url": "https://boards.greenhouse.io/swiftsolar/jobs/4502634008"
+          }
+        ],
+        "id": 4003269008,
+        "parent_id": 4003267008
+      }
+    ]
+  },
+  "4003268008": {
+    "name": "Data",
+    "jobs": [],
+    "id": 4003268008,
+    "parent_id": 4003267008
+  },
+  "4003269008": {
+    "name": "Equipment Engineering",
+    "jobs": [
+      {
+        "title": "Equipment Maintenance Engineer",
+        "location": "San Carlos, CA",
+        "url": "https://boards.greenhouse.io/swiftsolar/jobs/4508331008"
+      },
+      {
+        "title": "Senior Equipment Maintenance Technician",
+        "location": "San Carlos, CA",
+        "url": "https://boards.greenhouse.io/swiftsolar/jobs/4502634008"
+      }
+    ],
+    "id": 4003269008,
+    "parent_id": 4003267008
+  },
+  "4003270008": {
+    "name": "Process Engineering",
+    "jobs": [],
+    "id": 4003270008,
+    "parent_id": 4003267008
+  },
+  "4003271008": {
+    "name": "Finance",
+    "jobs": [],
+    "id": 4003271008,
+    "parent_id": null
+  },
+  "4003272008": {
+    "name": "General",
+    "jobs": [
+      {
+        "title": "Executive Operating Partner",
+        "location": "San Carlos, CA",
+        "url": "https://boards.greenhouse.io/swiftsolar/jobs/4255490008"
+      },
+      {
+        "title": "Future Opportunities at Swift Solar",
+        "location": "San Carlos, CA",
+        "url": "https://boards.greenhouse.io/swiftsolar/jobs/4451849008"
+      }
+    ],
+    "id": 4003272008,
+    "parent_id": null
+  },
+  "4003273008": {
+    "name": "Operations",
+    "jobs": [],
+    "id": 4003273008,
+    "parent_id": null,
+    "children": []
+  },
+  "4003274008": {
+    "name": "People Ops",
+    "jobs": [],
+    "id": 4003274008,
+    "parent_id": 4003273008
+  },
+  "4003275008": {
+    "name": "Finance Ops",
+    "jobs": [],
+    "id": 4003275008,
+    "parent_id": 4003273008
+  },
+  "4003276008": {
+    "name": "R&D",
+    "jobs": [],
+    "id": 4003276008,
+    "parent_id": null,
+    "children": [
+      {
+        "name": "General R&D",
+        "jobs": [
+          {
+            "title": "R&D Process Engineer",
+            "location": "San Carlos, CA",
+            "url": "https://boards.greenhouse.io/swiftsolar/jobs/4465052008"
+          },
+          {
+            "title": "Reliability Engineer",
+            "location": "San Carlos, CA",
+            "url": "https://boards.greenhouse.io/swiftsolar/jobs/4499540008"
+          }
+        ],
+        "id": 4003277008,
+        "parent_id": 4003276008
+      }
+    ]
+  },
+  "4003277008": {
+    "name": "General R&D",
+    "jobs": [
+      {
+        "title": "R&D Process Engineer",
+        "location": "San Carlos, CA",
+        "url": "https://boards.greenhouse.io/swiftsolar/jobs/4465052008"
+      },
+      {
+        "title": "Reliability Engineer",
+        "location": "San Carlos, CA",
+        "url": "https://boards.greenhouse.io/swiftsolar/jobs/4499540008"
+      }
+    ],
+    "id": 4003277008,
+    "parent_id": 4003276008
+  },
+  "4003278008": {
+    "name": "NREL R&D",
+    "jobs": [],
+    "id": 4003278008,
+    "parent_id": 4003276008
+  },
+  "4003279008": {
+    "name": "Product R&D",
+    "jobs": [],
+    "id": 4003279008,
+    "parent_id": 4003276008
+  },
+  "4005696008": {
+    "name": "Business Development",
+    "jobs": [],
+    "id": 4005696008,
+    "parent_id": null
+  },
+  "4019234008": {
+    "name": "Manufacturing",
+    "jobs": [],
+    "id": 4019234008,
+    "parent_id": null
+  }
+}
