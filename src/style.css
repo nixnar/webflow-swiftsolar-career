@@ -1,0 +1,30 @@
+.tailwind {
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  box-sizing: border-box;
+}
+
+@layer components {
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 125%;
+  }
+  ,
+  @media screen and (max-width: 479px) {
+    h3 {
+      font-size: 20px;
+    }
+  }
+  ,
+  .newborder {
+    border: 2px solid red;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
