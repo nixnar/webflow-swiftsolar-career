@@ -1,1 +1,5 @@
-console.log("Hello, world!aoeu");
+import React from "react";
+import ReactDOM from "react-dom";
+
+const root = ReactDOM.createRoot(document.getElementById("react"));
+root.render(<h1>Hello, world!</h1>);
