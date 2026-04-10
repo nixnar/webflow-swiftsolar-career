@@ -77,12 +77,9 @@ const App = () => {
   deptMap.forEach((dept) => {
     if (dept.parent_id) {
       const parentDept = deptMap.get(dept.parent_id);
-      if (parentDept) {
+      if (parentDept && dept.jobs?.length > 0) {
         if (!parentDept.children) parentDept.children = [];
-        // add child if only has jobs
-        if (dept.jobs?.length > 0) {
-          parentDept.children.push(dept);
-        }
+        parentDept.children.push(dept);
       }
     }
   });
@@ -112,22 +109,22 @@ const App = () => {
               <h3>{department.name}</h3>
             </div>
 
-            {department.children
-              ? // children jobs
-                department.children.map((childDept) => (
-                  <div key={childDept.name} className="w-full">
-                    <div className="pt-6">
-                      <h3 className="text-[#474747]">{childDept.name}</h3>
-                    </div>
-                    {childDept.jobs.map((job) => (
-                      <SingleEntry key={job.url} job={job} />
-                    ))}
+            {department.jobs?.length > 0 &&
+              department.jobs.map((job) => (
+                <SingleEntry key={job.url} job={job} />
+              ))}
+
+            {department.children?.length > 0 &&
+              department.children.map((childDept) => (
+                <div key={childDept.name} className="w-full">
+                  <div className="pt-6">
+                    <h3 className="text-[#474747]">{childDept.name}</h3>
                   </div>
-                ))
-              : // root jobs
-                department.jobs.map((job) => (
-                  <SingleEntry key={job.url} job={job} />
-                ))}
+                  {childDept.jobs.map((job) => (
+                    <SingleEntry key={job.url} job={job} />
+                  ))}
+                </div>
+              ))}
           </div>
         ))}
       </div>
